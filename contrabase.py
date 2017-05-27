@@ -3,10 +3,10 @@
 
 import MySQLdb
 
-DB_HOST = '10.1.1.201'
+DB_HOST = 'localhost'
 DB_USER = 'root'
 DB_PASS = ''
-DB_NAME = 'contabilidad'
+DB_NAME = 'arduino'
 
 
 def run_query(query):
@@ -25,8 +25,8 @@ def run_query(query):
 
 
 
-texto = "select numero, date_format(fecha, '%d/%m/%Y'), nombre from facturas"
+texto = "select temperatura, date_format(fecha, '%d/%m/%Y %H:%i:%s') from temperatura order by fecha desc"
 registros = run_query(texto)
 
 for i in range(len(registros)):
-    print str(registros[i][0]) + ' -- ' + registros[i][1] + ' -- ' + registros[i][2]
+    print registros[i][1] + ' -- ' + str(registros[i][0])
