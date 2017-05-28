@@ -3,21 +3,33 @@
 import time, datetime
 import MySQLdb
 
+#inicializacion
 DB_HOST = 'localhost'
 DB_USER = 'root'
 DB_PASS = ''
 DB_NAME = 'arduino'
-
-ahora = datetime.datetime.now()
 datos = [DB_HOST, DB_USER, DB_PASS, DB_NAME]
 conn = MySQLdb.connect(*datos)
 cursor = conn.cursor()
-try:
-   cursor.execute("INSERT INTO temperatura VALUES (%s,%s)",(13.5,ahora))
-   conn.commit()
-except:
-   conn.rollback()
+t_end = time.time() + 60
 
+#12 lecturas secuenciales
+while time.time() < t_end:
+    try:
+        # inserción de datos en MySQL
+        ahora = datetime.datetime.now()
+        cursor.execute("INSERT INTO temperatura VALUES (%s,%s)",(13.5,ahora))
+        conn.commit()
+        time.sleep(5)
+        print("registro grabado...")
+
+    except:
+        # error excepción -- vuelta atras
+        conn.rollback()
+        time.sleep(5)
+        print("registro rechazado ...")
+
+# cerramos cursor y conexiones, mensaje de fin
 cursor.close()
 conn.close()
-print("registro grabado...")
+print("fin de la grabacion...")
