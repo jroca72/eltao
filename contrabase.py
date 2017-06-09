@@ -28,5 +28,6 @@ def run_query(query):
 texto = "select temperatura, date_format(fecha, '%d/%m/%Y %H:%i:%s') from temperatura order by fecha desc"
 registros = run_query(texto)
 
+# comentario
 for i in range(len(registros)):
     print registros[i][1] + ' -- ' + str(registros[i][0])
