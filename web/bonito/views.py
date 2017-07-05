@@ -11,6 +11,6 @@ from bonito.models import temperatura
 #------------------------------- Principal ------------------------------------------------------
 
 def home(request):
-    las_temperaturas = temperatura.objects.order_by('-fecha')
+    las_temperaturas = temperatura.objects.order_by('-fecha')[:24]
     context = {'las_temperaturas': las_temperaturas }
     return render(request, 'bonito/home.html', context)
